@@ -28,6 +28,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     implementation("org.flywaydb:flyway-core")
     implementation("org.postgresql:postgresql")
+    testImplementation("io.craigmiller160:testcontainers-common:1.1.1")
 }
 
 tasks.withType<KotlinCompile> {
