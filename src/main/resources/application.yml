@@ -27,3 +27,6 @@ logging:
     root: INFO
     io.craigmiller160: DEBUG
     wc.schild: INFO
+
+videoconverter:
+  rootDir: ${user.home}/Videos
