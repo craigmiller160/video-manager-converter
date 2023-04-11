@@ -22,7 +22,7 @@ class VideoConverterController {
 
 
     @GetMapping
-    fun getConversionProgress(): List<FileConversionResponse> {
+    fun getAllConversions(): List<FileConversionResponse> {
         TODO()
     }
 
