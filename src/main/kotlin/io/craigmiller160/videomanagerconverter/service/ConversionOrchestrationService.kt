@@ -22,7 +22,6 @@ class ConversionOrchestrationService(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
     @EventListener
-    @Transactional
     fun startup(event: ContextStartedEvent) {
         fileToConvertRepository.resetInProgressToPending()
         fileToConvertRepository.flush()
