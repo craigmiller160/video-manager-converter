@@ -12,14 +12,15 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Profile("!test")
 class ConversionOrchestrationService(
-    private val fileToConvertRepository: FileToConvertRepository
+    private val fileToConvertRepository: FileToConvertRepository,
+    private val fileConverterFactory: FileConverterFactory
 ) {
     @EventListener
     @Transactional
     fun startup(event: ContextStartedEvent) {
         fileToConvertRepository.resetInProgressToPending()
         fileToConvertRepository.flush()
-        fileToConvertRepository.findAllPending()
+        val pendingFiles = fileToConvertRepository.findAllPending()
     }
 
     @EventListener
