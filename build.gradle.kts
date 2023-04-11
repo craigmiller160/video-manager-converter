@@ -25,6 +25,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.postgresql:postgresql")
 }
 
 tasks.withType<KotlinCompile> {

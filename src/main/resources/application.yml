@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/video_manager_converter_dev
+    username: postgres
+    password: password
