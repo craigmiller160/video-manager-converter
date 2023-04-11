@@ -1,5 +1,6 @@
 package io.craigmiller160.videomanagerconverter.web.controller
 
+import io.craigmiller160.videomanagerconverter.service.ConversionDataService
 import io.craigmiller160.videomanagerconverter.web.types.FileConversionRequest
 import io.craigmiller160.videomanagerconverter.web.types.FileConversionResponse
 import org.springframework.http.HttpStatus
@@ -13,22 +14,20 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/video-converter")
-class VideoConverterController {
+class VideoConverterController(
+    private val conversionDataService: ConversionDataService
+) {
     @PostMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun newConversion(@RequestBody request: FileConversionRequest) {
-        TODO()
-    }
+    fun createNewConversion(@RequestBody request: FileConversionRequest): FileConversionResponse =
+        conversionDataService.createNewConversion(request)
 
 
     @GetMapping
-    fun getAllConversions(): List<FileConversionResponse> {
-        TODO()
-    }
+    fun getAllConversions(): List<FileConversionResponse> =
+        conversionDataService.getAllConversions()
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun clearPastConversions() {
-        TODO()
-    }
+    fun clearPastConversions() =
+        conversionDataService.clearPastConversions()
 }

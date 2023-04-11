@@ -42,6 +42,11 @@ class VideoFileControllerTest @Autowired constructor(
     @Test
     fun `starts a new conversion`() {
         val request = FileConversionRequest("/foo/bar/file.mkv")
+        val response = FileConversionResponse(
+            sourceFile = request.sourceFile,
+            targetFile = request.sourceFile.replace("mkv", "mp4"),
+            status = ConvertStatus.PENDING
+        )
         mockMvc.post("/video-converter") {
             header("Authorization", "Bearer ${user.token}")
             contentType = MediaType.APPLICATION_JSON
@@ -49,7 +54,10 @@ class VideoFileControllerTest @Autowired constructor(
         }
             .andExpect {
                 status {
-                    isNoContent()
+                    isOk()
+                }
+                content {
+                    json(objectMapper.writeValueAsString(response))
                 }
             }
 
