@@ -19,6 +19,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.transaction.annotation.Transactional
@@ -107,6 +108,18 @@ class VideoFileControllerTest @Autowired constructor(
 
     @Test
     fun `clears all past conversions`() {
-        TODO()
+        createTestFiles()
+
+        mockMvc.delete("/video-converter") {
+            header("Authorization", "Bearer ${user.token}")
+        }
+            .andExpect {
+                status { isNoContent() }
+            }
+
+        val results = repo.findAll()
+        assertThat(results).hasSize(2)
+            .extracting("status")
+            .contains(ConvertStatus.PENDING, ConvertStatus.IN_PROGRESS)
     }
 }
