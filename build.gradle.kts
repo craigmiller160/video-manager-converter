@@ -32,6 +32,7 @@ dependencies {
     testImplementation("io.craigmiller160:testcontainers-common:1.1.1")
     implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.3.1")
     implementation("ws.schild:jave-all-deps:3.3.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
 }
 
 tasks.withType<KotlinCompile> {
