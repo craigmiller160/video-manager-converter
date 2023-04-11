@@ -17,7 +17,9 @@ class ConversionOrchestrationService(
     @EventListener
     @Transactional
     fun startup(event: ContextStartedEvent) {
-        TODO("Start for all pending")
+        fileToConvertRepository.resetInProgressToPending()
+        fileToConvertRepository.flush()
+        fileToConvertRepository.findAllPending()
     }
 
     @EventListener
