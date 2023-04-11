@@ -21,3 +21,9 @@ jwt:
     converter:
       resource-id: video-manager-converter
       principal-attribute: preferred_username
+
+logging:
+  level:
+    root: INFO
+    io.craigmiller160: DEBUG
+    wc.schild: INFO
