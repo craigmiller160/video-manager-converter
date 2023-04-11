@@ -1,4 +1,4 @@
-package io.craigmiller160.markettracker.portfolio.security
+package io.craigmiller160.videomanagerconverter.security
 
 import io.craigmiller160.videomanagerconverter.config.JwtAuthConverterConfig
 import org.springframework.core.convert.converter.Converter
