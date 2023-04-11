@@ -30,6 +30,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.postgresql:postgresql")
     testImplementation("io.craigmiller160:testcontainers-common:1.1.1")
+    implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.3.1")
 }
 
 tasks.withType<KotlinCompile> {
