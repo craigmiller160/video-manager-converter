@@ -41,9 +41,6 @@ class VideoConverterControllerTest @Autowired constructor(
         authHelper.login(it)
     }
 
-    @MockBean
-    private lateinit var orchestrationService: ConversionOrchestrationService
-
     @Test
     fun `starts a new conversion`() {
         val request = FileConversionRequest("/foo/bar/file.mkv")
