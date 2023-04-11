@@ -12,7 +12,7 @@ class FileToConvert {
     @Id
     var id: UUID = UUID.randomUUID()
     var sourceFile: String = ""
-    var targetFile: String? = null
+    var targetFile: String = ""
     var status: ConvertStatus = ConvertStatus.PENDING
     var errorMessage: String? = null
     @Version
