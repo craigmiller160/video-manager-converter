@@ -6,6 +6,7 @@ import io.craigmiller160.testcontainers.common.core.AuthenticationHelper
 import io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus
 import io.craigmiller160.videomanagerconverter.domain.entity.FileToConvert
 import io.craigmiller160.videomanagerconverter.domain.repository.FileToConvertRepository
+import io.craigmiller160.videomanagerconverter.service.ConversionOrchestrationService
 import io.craigmiller160.videomanagerconverter.web.types.FileConversionRequest
 import io.craigmiller160.videomanagerconverter.web.types.FileConversionResponse
 import org.assertj.core.api.Assertions.assertThat
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -38,6 +40,9 @@ class VideoConverterControllerTest @Autowired constructor(
     private val user = authHelper.createUser("me@gmail.com").let {
         authHelper.login(it)
     }
+
+    @MockBean
+    private lateinit var orchestrationService: ConversionOrchestrationService
 
     @Test
     fun `starts a new conversion`() {
