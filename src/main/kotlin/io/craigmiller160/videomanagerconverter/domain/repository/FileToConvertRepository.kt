@@ -44,6 +44,15 @@ interface FileToConvertRepository : JpaRepository<FileToConvert, UUID> {
     @Transactional
     @Query("""
         UPDATE FileToConvert f    
+        SET f.status = io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus.IN_PROGRESS
+        WHERE f.id = :id
+    """)
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    fun markInProgress(@Param("id") id: UUID)
+
+    @Transactional
+    @Query("""
+        UPDATE FileToConvert f    
         SET f.status = io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus.FAILED,
         f.errorMessage = :message
         WHERE f.id = :id
