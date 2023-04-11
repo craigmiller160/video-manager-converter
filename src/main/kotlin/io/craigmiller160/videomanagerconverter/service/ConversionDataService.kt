@@ -3,16 +3,19 @@ package io.craigmiller160.videomanagerconverter.service
 import io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus
 import io.craigmiller160.videomanagerconverter.domain.entity.FileToConvert
 import io.craigmiller160.videomanagerconverter.domain.repository.FileToConvertRepository
+import io.craigmiller160.videomanagerconverter.events.NewConversionEvent
 import io.craigmiller160.videomanagerconverter.exceptions.BadRequestException
 import io.craigmiller160.videomanagerconverter.web.types.FileConversionRequest
 import io.craigmiller160.videomanagerconverter.web.types.FileConversionResponse
 import io.craigmiller160.videomanagerconverter.web.types.toResponse
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ConversionDataService(
-    private val fileToConvertRepository: FileToConvertRepository
+    private val fileToConvertRepository: FileToConvertRepository,
+    private val publisher: ApplicationEventPublisher
 ) {
     @Transactional
     fun createNewConversion(request: FileConversionRequest): FileConversionResponse {
@@ -20,12 +23,13 @@ class ConversionDataService(
             throw BadRequestException("Only .mkv files are supported at this time")
         }
 
-        return FileToConvert().apply {
+        val file = FileToConvert().apply {
             sourceFile = request.sourceFile
             targetFile = request.sourceFile.replace(Regex("mkv$"), "mp4")
         }
             .let { fileToConvertRepository.save(it) }
-            .let { it.toResponse() }
+        publisher.publishEvent(NewConversionEvent(file.id))
+        return file.toResponse()
     }
 
     fun getAllConversions(): List<FileConversionResponse> =
