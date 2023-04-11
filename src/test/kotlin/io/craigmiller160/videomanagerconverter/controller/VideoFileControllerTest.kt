@@ -7,6 +7,7 @@ import io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus
 import io.craigmiller160.videomanagerconverter.domain.entity.FileToConvert
 import io.craigmiller160.videomanagerconverter.domain.repository.FileToConvertRepository
 import io.craigmiller160.videomanagerconverter.web.types.FileConversionRequest
+import io.craigmiller160.videomanagerconverter.web.types.FileConversionResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -18,6 +19,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.transaction.annotation.Transactional
 
@@ -62,9 +64,45 @@ class VideoFileControllerTest @Autowired constructor(
             .hasFieldOrPropertyWithValue("errorMessage", null)
     }
 
+    private fun createTestFiles(): List<FileToConvert> =
+        (0 until 4).map { index ->
+            FileToConvert().apply {
+                sourceFile = "Source-$index"
+                targetFile = "Target-$index"
+                status = when(index) {
+                    1 -> ConvertStatus.PENDING
+                    2 -> ConvertStatus.IN_PROGRESS
+                    3 -> ConvertStatus.COMPLETED
+                    else -> ConvertStatus.FAILED
+                }
+                if (index == 4) {
+                    errorMessage = "The Error"
+                }
+            }
+        }
+            .let { repo.saveAll(it) }
+
     @Test
     fun `gets a list of all conversions`() {
-        TODO()
+        val files = createTestFiles()
+        val expected = files.map { file ->
+            FileConversionResponse(
+                sourceFile = file.sourceFile,
+                targetFile = file.targetFile,
+                status = file.status,
+                errorMessage = file.errorMessage
+            )
+        }
+
+        mockMvc.get("/video-converter") {
+            header("Authorization", "Bearer ${user.token}")
+        }
+            .andExpect {
+                status { isOk() }
+                content {
+                    json(objectMapper.writeValueAsString(expected))
+                }
+            }
     }
 
     @Test
