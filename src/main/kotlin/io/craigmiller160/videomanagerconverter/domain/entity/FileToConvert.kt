@@ -3,6 +3,7 @@ package io.craigmiller160.videomanagerconverter.domain.entity
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.persistence.Version
 import java.util.UUID
 
 @Entity
@@ -14,4 +15,6 @@ class FileToConvert {
     var targetFile: String? = null
     var status: ConvertStatus = ConvertStatus.PENDING
     var errorMessage: String? = null
+    @Version
+    var version: Int = 1
 }

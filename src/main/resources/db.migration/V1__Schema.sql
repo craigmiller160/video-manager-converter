@@ -6,5 +6,6 @@ CREATE TABLE files_to_convert (
     target_file TEXT,
     status convert_status NOT NULL,
     error_message TEXT,
+    version INT NOT NULL DEFAULT 1,
     PRIMARY KEY (id)
 );
