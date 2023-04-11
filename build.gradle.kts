@@ -15,7 +15,7 @@ plugins {
 
 group = projectGroup
 version = projectVersion
-java.sourceCompatibility = JavaVersion.VERSION_20
+java.sourceCompatibility = JavaVersion.VERSION_19
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
@@ -30,7 +30,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict", "-Xcontext-receivers")
-        jvmTarget = "20"
+        jvmTarget = "19"
     }
 }
 
