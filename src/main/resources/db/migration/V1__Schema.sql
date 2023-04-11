@@ -1,4 +1,4 @@
-CREATE TYPE convert_status AS ENUM ('pending', 'in_progress', 'completed', 'failed');
+CREATE TYPE convert_status AS ENUM ('PENDING', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
 
 CREATE TABLE files_to_convert (
     id UUID NOT NULL,
