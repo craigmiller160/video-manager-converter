@@ -3,3 +3,15 @@ spring:
     url: jdbc:postgresql://localhost:5432/video_manager_converter_dev
     username: postgres
     password: password
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://auth-craigmiller160.ddns.net/realms/apps-dev
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+jwt:
+  auth:
+    converter:
+      resource-id: video-manager-converter
+      principal-attribute: preferred_username
