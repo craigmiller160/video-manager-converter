@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.context.event.ContextStartedEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Profile("!test")
@@ -14,6 +15,7 @@ class ConversionOrchestrationService(
     private val fileToConvertRepository: FileToConvertRepository
 ) {
     @EventListener
+    @Transactional
     fun startup(event: ContextStartedEvent) {
         TODO("Start for all pending")
     }
