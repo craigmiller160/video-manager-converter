@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional
 @ExtendWith(TestcontainersExtension::class, SpringExtension::class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class VideoFileControllerTest @Autowired constructor(
+class VideoConverterControllerTest @Autowired constructor(
     private val mockMvc: MockMvc,
     private val repo: FileToConvertRepository,
     private val objectMapper: ObjectMapper
