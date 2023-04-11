@@ -1,5 +1,6 @@
 package io.craigmiller160.videomanagerconverter.service
 
+import io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus
 import io.craigmiller160.videomanagerconverter.domain.entity.FileToConvert
 import io.craigmiller160.videomanagerconverter.domain.repository.FileToConvertRepository
 import io.craigmiller160.videomanagerconverter.exceptions.BadRequestException
@@ -32,7 +33,8 @@ class ConversionDataService(
             .map { it.toResponse() }
 
     @Transactional
-    fun clearPastConversions() {
-        TODO()
-    }
+    fun clearPastConversions() =
+        fileToConvertRepository.deleteAllByStatusNotIn(listOf(
+            ConvertStatus.PENDING, ConvertStatus.IN_PROGRESS
+        ))
 }
