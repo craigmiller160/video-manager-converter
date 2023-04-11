@@ -1,6 +1,8 @@
 package io.craigmiller160.videomanagerconverter.domain.entity
 
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import jakarta.persistence.Version
@@ -13,6 +15,7 @@ class FileToConvert {
     var id: UUID = UUID.randomUUID()
     var sourceFile: String = ""
     var targetFile: String = ""
+    @Enumerated(EnumType.STRING)
     var status: ConvertStatus = ConvertStatus.PENDING
     var errorMessage: String? = null
     @Version
