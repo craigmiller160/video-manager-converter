@@ -79,7 +79,7 @@ class VideoConverterControllerTest @Autowired constructor(
     fun `restart failed conversions`() {
         createTestFiles()
 
-        mockMvc.post("/video-converter") {
+        mockMvc.post("/video-converter/restart") {
             header("Authorization", "Bearer ${user.token}")
         }
             .andExpect {
