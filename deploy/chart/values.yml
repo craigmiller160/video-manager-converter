@@ -1,0 +1,29 @@
+app_deployment:
+  appName: video-manager-converter
+  image: nexus-docker-craigmiller160.ddns.net/video-manager-converter:latest
+  configMap:
+    spring.profiles.active: prod
+    spring.datasource.host: postgres.infra-prod
+    spring.datasource.port: "5432"
+  onepassworditems:
+    - name: video-manager-postgres
+      itemPath: vaults/Home Server (Prod)/items/Postgres Root Account
+  ports:
+    - containerPort: 8080
+  secrets:
+    - envVariable: spring.datasource.username
+      secretName: video-manager-postgres
+      secretKey: username
+    - envVariable: spring.datasource.password
+      secretName: video-manager-postgres
+      secretKey: password
+  commonProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8080
+      scheme: HTTP
+  volumes:
+    - name: video-manager-converter-volume-homedir
+      type: HostPath
+      deploymentMountPath: /opt/video-manager/homeDir
+      hostPath: /home/craig
