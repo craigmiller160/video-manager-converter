@@ -1,4 +1,4 @@
-FROM openjdk:19.0.2
+FROM openjdk:19-jdk-alpine
 
 RUN mkdir -p /opt/videos
 RUN mkdir -p /opt/video-manager/homeDir
