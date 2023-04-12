@@ -8,7 +8,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm")
     kotlin("plugin.spring")
-    id("io.craigmiller160.gradle.defaults") version "1.0.1"
+    id("io.craigmiller160.gradle.defaults") version "1.1.0"
     id("com.diffplug.spotless") version "6.17.0"
     `maven-publish`
 }
@@ -40,11 +40,6 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict", "-Xcontext-receivers")
         jvmTarget = "19"
     }
-}
-
-tasks.getByName<Jar>("jar") {
-    enabled = true
-    archiveClassifier.set("")
 }
 
 tasks.withType<Test> {
