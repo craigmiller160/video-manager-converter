@@ -11,6 +11,7 @@ import ws.schild.jave.encode.enums.X264_PROFILE
 import ws.schild.jave.info.MultimediaInfo
 import ws.schild.jave.progress.EncoderProgressListener
 import java.nio.file.Paths
+import java.util.concurrent.atomic.AtomicLong
 
 class FileConverterImpl(
     private val rootDir: String,
@@ -39,11 +40,16 @@ private class FileConverterListener(
     private val targetFile: String
 ) : EncoderProgressListener {
     private val log = LoggerFactory.getLogger(javaClass)
+    private val counter = AtomicLong(0)
     override fun sourceInfo(info: MultimediaInfo) {}
     override fun progress(permil: Int) {
-        log.debug("Conversion in progress. Source: {}, Target: {}", sourceFile, targetFile)
+        if (counter.incrementAndGet() % 20 == 0L) {
+            log.debug("Conversion in progress. Source: {}, Target: {}", sourceFile, targetFile)
+        }
     }
-    override fun message(message: String) {}
+    override fun message(message: String) {
+        log.warn("Encoder warning: {}", message)
+    }
 }
 
 private fun getAudioVideoAttributes(
