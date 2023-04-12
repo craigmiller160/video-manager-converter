@@ -85,7 +85,9 @@ class VideoConverterControllerTest @Autowired constructor(
             .andExpect {
                 status { isNoContent() }
             }
-        TODO("Validate DB and event")
+
+        val failed = repo.findAll().filter { it.status == ConvertStatus.FAILED }
+        assertThat(failed).hasSize(0)
     }
 
     private fun createTestFiles(): List<FileToConvert> =
