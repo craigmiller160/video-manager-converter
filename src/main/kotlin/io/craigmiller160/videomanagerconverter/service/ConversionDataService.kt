@@ -32,6 +32,14 @@ class ConversionDataService(
         return file.toResponse()
     }
 
+    @Transactional
+    fun restartFailedConversions() {
+        fileToConvertRepository.resetFailedToPending()
+        fileToConvertRepository.flush()
+        fileToConvertRepository.findAllPending()
+            .forEach { file -> publisher.publishEvent(NewConversionEvent(file.id)) }
+    }
+
     fun getAllConversions(): List<FileConversionResponse> =
         fileToConvertRepository.findAll()
             .map { it.toResponse() }

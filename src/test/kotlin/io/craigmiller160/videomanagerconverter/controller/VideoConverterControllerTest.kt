@@ -75,6 +75,19 @@ class VideoConverterControllerTest @Autowired constructor(
             .hasFieldOrPropertyWithValue("errorMessage", null)
     }
 
+    @Test
+    fun `restart failed conversions`() {
+        createTestFiles()
+
+        mockMvc.post("/video-converter") {
+            header("Authorization", "Bearer ${user.token}")
+        }
+            .andExpect {
+                status { isNoContent() }
+            }
+        TODO("Validate DB and event")
+    }
+
     private fun createTestFiles(): List<FileToConvert> =
         (0 until 4).map { index ->
             FileToConvert().apply {

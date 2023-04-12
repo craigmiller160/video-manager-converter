@@ -26,6 +26,16 @@ interface FileToConvertRepository : JpaRepository<FileToConvert, UUID> {
     @Transactional
     @Query("""
         UPDATE FileToConvert f
+        SET f.status = io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus.PENDING,
+        f.errorMessage = null
+        WHERE f.status = io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus.FAILED
+    """)
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    fun resetFailedToPending()
+
+    @Transactional
+    @Query("""
+        UPDATE FileToConvert f
         SET f.status = io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus.PENDING
         WHERE f.status = io.craigmiller160.videomanagerconverter.domain.entity.ConvertStatus.IN_PROGRESS
     """)

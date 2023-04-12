@@ -21,6 +21,11 @@ class VideoConverterController(
     fun createNewConversion(@RequestBody request: FileConversionRequest): FileConversionResponse =
         conversionDataService.createNewConversion(request)
 
+    @PostMapping("/restart")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun restartFailedConversions() =
+        conversionDataService.restartFailedConversions()
+
 
     @GetMapping
     fun getAllConversions(): List<FileConversionResponse> =
