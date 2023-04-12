@@ -43,7 +43,8 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.getByName<Jar>("jar") {
-    enabled = false
+    enabled = true
+    archiveClassifier.set("")
 }
 
 tasks.withType<Test> {
