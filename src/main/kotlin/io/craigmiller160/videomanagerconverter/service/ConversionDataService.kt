@@ -41,4 +41,7 @@ class ConversionDataService(
         fileToConvertRepository.deleteAllByStatusNotIn(listOf(
             ConvertStatus.PENDING, ConvertStatus.IN_PROGRESS
         ))
+
+    @Transactional
+    fun clearAllConversions() = fileToConvertRepository.deleteAll()
 }

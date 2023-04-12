@@ -30,4 +30,8 @@ class VideoConverterController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun clearPastConversions() =
         conversionDataService.clearPastConversions()
+
+    @DeleteMapping("/all")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun clearAllConversions() = conversionDataService.clearAllConversions()
 }
