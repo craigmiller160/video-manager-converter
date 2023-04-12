@@ -19,7 +19,8 @@ class WebSecurityConfig(private val jwtAuthConverter: JwtAuthConverter) {
           .disable()
           .oauth2ResourceServer { it.jwt().jwtAuthenticationConverter(jwtAuthConverter) }
           .authorizeHttpRequests {
-              it.requestMatchers("/**").hasRole("access")
+              it.requestMatchers("/actuator/health").permitAll()
+                  .requestMatchers("/**").hasRole("access")
           }
           .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
           .build()
