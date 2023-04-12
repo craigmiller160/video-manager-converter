@@ -28,3 +28,12 @@ app_deployment:
       type: HostPath
       deploymentMountPath: /opt/video-manager/homeDir
       hostPath: /home/craig
+  secure_ingress:
+    name: video-manager-converter-ingress
+    backendIsHttps: false
+    hosts:
+      - name: apps-craigmiller160.ddns.net
+        services:
+          - path: /(video-converter/?.*)
+            serviceName: video-manager-converter
+            portNumber: 8080
