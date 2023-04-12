@@ -132,4 +132,18 @@ class VideoConverterControllerTest @Autowired constructor(
             .extracting("status")
             .contains(ConvertStatus.PENDING, ConvertStatus.IN_PROGRESS)
     }
+
+    @Test
+    fun `clears all conversions`() {
+        createTestFiles()
+
+        mockMvc.delete("/video-converter/all") {
+            header("Authorization", "Bearer ${user.token}")
+        }
+            .andExpect {
+                status { isNoContent() }
+            }
+
+        assertThat(repo.count()).isEqualTo(0)
+    }
 }
