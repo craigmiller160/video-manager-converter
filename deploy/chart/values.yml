@@ -6,7 +6,7 @@ app_deployment:
     spring.datasource.host: postgres.infra-prod
     spring.datasource.port: "5432"
   onepassworditems:
-    - name: video-manager-postgres
+    - name: video-converter-postgres
       itemPath: vaults/Home Server (Prod)/items/Postgres Root Account
   ports:
     - containerPort: 8080
