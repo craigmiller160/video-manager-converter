@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class FileConverterFactory(
-    @Value("\${videoconverter.rootDir}")
+    @Value("\${videoconverter.homeDir}")
     private val rootDir: String
 ) {
     fun newConverter(file: FileToConvert): FileConverter = FileConverterImpl(rootDir, file)
