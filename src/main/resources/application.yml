@@ -29,4 +29,4 @@ logging:
     wc.schild: INFO
 
 videoconverter:
-  rootDir: ${user.home}/Videos
+  rootDir: ${user.home}/Downloads/Temp
