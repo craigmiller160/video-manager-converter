@@ -3,8 +3,8 @@ app_deployment:
   image: nexus-docker-craigmiller160.ddns.net/video-manager-converter:latest
   configMap:
     spring.profiles.active: prod
-    spring.datasource.host: postgres.infra-prod
-    spring.datasource.port: "5432"
+    spring.datasource.url: jdbc:postgresql://postgres.infra-prod:5432/video_manager_converter
+    spring.security.oauth2.resourceserver.jwt.issuer-uri: https://auth-craigmiller160.ddns.net/realms/apps-prod
   onepassworditems:
     - name: video-converter-postgres
       itemPath: vaults/Home Server (Prod)/items/Postgres Root Account
