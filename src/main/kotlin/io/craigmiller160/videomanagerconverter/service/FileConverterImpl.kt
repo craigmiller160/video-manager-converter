@@ -12,16 +12,25 @@ import ws.schild.jave.info.MultimediaInfo
 import ws.schild.jave.progress.EncoderProgressListener
 import java.nio.file.Paths
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.io.path.deleteIfExists
+import kotlin.io.path.exists
 
 class FileConverterImpl(
     private val rootDir: String,
     private val file: FileToConvert
 ) : FileConverter {
     private val encoder = Encoder()
+    private val log = LoggerFactory.getLogger(javaClass)
     override fun convert(): Result<Unit> =
         runCatching {
-            val mediaSource = Paths.get(rootDir, file.sourceFile).toFile().let { MultimediaObject(it) }
             val targetFile = Paths.get(rootDir, file.targetFile)
+            if (targetFile.exists()) {
+                log.error("Target file exists, aborting conversion. File: {}", targetFile)
+                return@runCatching
+            }
+
+            val sourceFile = Paths.get(rootDir, file.sourceFile)
+            val mediaSource = sourceFile.toFile().let { MultimediaObject(it) }
             val (audio, video) = mediaSource.let { getAudioVideoAttributes(it.info) }
 
             val attrs =
@@ -32,6 +41,9 @@ class FileConverterImpl(
                     setVideoAttributes(video)
                 }
             encoder.encode(mediaSource, targetFile.toFile(), attrs, FileConverterListener(file.sourceFile, file.targetFile))
+            if (!sourceFile.deleteIfExists()) {
+                log.error("Unable to delete source file: {}", sourceFile)
+            }
         }
 }
 
