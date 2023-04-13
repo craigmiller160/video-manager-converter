@@ -8,11 +8,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
+import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.annotation.Profile
-import org.springframework.context.event.ContextStartedEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Profile("!test")
@@ -22,7 +21,7 @@ class ConversionOrchestrationService(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
     @EventListener
-    fun startup(event: ContextStartedEvent) {
+    fun startup(event: ApplicationReadyEvent) {
         fileToConvertRepository.resetInProgressToPending()
         fileToConvertRepository.flush()
         val pendingFiles = fileToConvertRepository.findAllPending()
