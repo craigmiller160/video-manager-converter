@@ -13,7 +13,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://auth-craigmiller160.ddns.net/realms/apps-dev
+          issuer-uri: https://auth.craigmiller160.us/realms/apps-dev
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 jwt:

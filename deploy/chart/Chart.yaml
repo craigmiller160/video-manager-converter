@@ -6,4 +6,4 @@ appVersion: "1.0.0"
 dependencies:
   - name: app_deployment
     version: 2.5.3
-    repository: https://nexus-craigmiller160.ddns.net/repository/helm-private
+    repository: https://nexus.craigmiller160.us/repository/helm-private
