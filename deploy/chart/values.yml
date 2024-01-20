@@ -1,10 +1,10 @@
 app_deployment:
   appName: video-manager-converter
-  image: nexus-docker-craigmiller160.ddns.net/video-manager-converter:latest
+  image: nexus-docker.craigmiller160.us/video-manager-converter:latest
   configMap:
     spring.profiles.active: prod
     spring.datasource.url: jdbc:postgresql://postgres.infra-prod:5432/video_manager_converter
-    spring.security.oauth2.resourceserver.jwt.issuer-uri: https://auth-craigmiller160.ddns.net/realms/apps-prod
+    spring.security.oauth2.resourceserver.jwt.issuer-uri: https://auth.craigmiller160.us/realms/apps-prod
     videoconverter.homeDir: /opt/video-manager/homeDir
   onepassworditems:
     - name: video-converter-postgres
@@ -32,7 +32,7 @@ app_deployment:
     name: video-manager-converter-ingress
     backendIsHttps: false
     hosts:
-      - name: apps-craigmiller160.ddns.net
+      - name: apps.craigmiller160.us
         services:
           - path: /(video-converter/?.*)
             serviceName: video-manager-converter
